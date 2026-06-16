@@ -44,6 +44,8 @@ Here is what you will get in the Mega Update:
   * 🇺🇸 English (EN), 🇮🇹 Italiano (IT), 🇪🇸 Español (ES), 🇫🇷 Français (FR), 🇩🇪 Deutsch (DE)
   * 🇵🇹 Português (PT), 🇵🇱 Polski (PL), 🇺🇦 Ukraińska (UK), 🇹🇷 Türkçe (TR), 🇸🇦 العربية (AR)
   * 🇨🇳 简体中文 (ZH), 🇯🇵 日本語 (JA), 🇰🇷 한국어 (KO), 🇮🇳 हिन्दी (HI), 🇷🇺 Русский (RU)
+ 
+  * IF YOU WANT TO CHANG SOMETHING WE CAN TALK ABOUT IN CHAT
 
 ---
 ⭐ **Want all these features?** Support the project! Click the **Star** button in the top-right corner of this page to bring us closer to the goal and unlock the Ultimate Version for everyone!
