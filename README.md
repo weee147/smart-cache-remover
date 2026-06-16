@@ -24,3 +24,10 @@ A lightweight, high-speed, and open-source junk file cleaner built with Python. 
 
 ## 🛡️ License
 Distributed under the MIT License. See `LICENSE` for more information.
+
+ ## 🎯 Roadmap & Star Goals
+Help this project grow! Once we reach certain star milestones, I will unlock these awesome new features:
+
+* **⭐ 5 Stars:** Add a smooth **Graphical Loading Bar** to show the real-time scanning progress.
+* **⭐ 15 Stars:** Multi-language support! Add an easy toggle for **Italian and English languages**.
+* **⭐ 30 Stars:** Heavy software cleanup! Support for deep cache clearing of games like **Minecraft, Roblox, and Fortnite**.
