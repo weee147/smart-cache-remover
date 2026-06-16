@@ -25,12 +25,27 @@ A lightweight, high-speed, and open-source junk file cleaner built with Python. 
 ## 🛡️ License
 Distributed under the MIT License. See `LICENSE` for more information.
 
-## 🎯 Roadmap & Star Goals
-Help this project grow! Once we reach certain star milestones, I will unlock these awesome new features:
+## 🚀 The Project & The Next Evolution
 
-* **⭐ 5 Stars:** Add a smooth **Graphical Loading Bar** to show real-time scanning progress.
-* **⭐ 15 Stars:** Multi-language support! Add an easy toggle for **Italian and English languages**.
-* **⭐ 20 Stars:** **Ultimate UI Overhaul!** Complete redesign of the interface, perfected to the absolute maximum with premium visuals and modern layouts.
-* **⭐ 30 Stars:** Heavy software cleanup! Support for deep cache clearing of games like **Minecraft, Roblox, and Fortnite**.
-* **⭐ 50 Stars:** **Auto-Scheduler Mode!** Add a custom UI panel to automatically run the cleanup every 7 days or every month in the background.
+Currently, the software is in its stable **v1.0.0** version—lightweight, secure, and blazing fast. It cleans the system cache (TEMP), manages uncertain files in a dedicated Desktop Quarantine folder, and empties the Windows Recycle Bin in a single click.
+
+But this is just the beginning. I have already designed a **Mega Update** that will completely transform this utility into a Premium-tier software.
+
+### 🎯 Community Goal: Help us reach 50 Stars! ⭐
+As soon as this repository hits **50 Stars**, I will instantly release the **Version 2.0 "Ultimate Edition"**, unlocking all advanced and highly requested features ALL AT ONCE!
+
+Here is what you will get in the Mega Update:
+
+* **💎 Ultimate UI Overhaul:** A complete graphical redesign featuring a premium two-column layout, smooth animations, and a modern, polished dark aesthetic.
+* **📊 Real-Time Progress Bar:** A smooth, graphical leading bar to visually monitor scanning progress and file removal in real-time.
+* **🎮 Deep Gaming Cache Cleaning:** Integrated advanced modules specifically tailored to wipe heavy caches from **Minecraft, Roblox, and Fortnite** to reduce stuttering and free up disk space.
+* **📅 Background Auto-Scheduler Mode:** A dedicated control panel to schedule automated silent cleanups every 7 days or monthly, without you lifting a finger.
+* **🌐 Global Multi-Language Support (15 Languages):** A quick-toggle menu to instantly switch the entire software interface between 15 of the most widely spoken languages in the world, covering gamers and users globally:
+  * 🇺🇸 English (EN), 🇮🇹 Italiano (IT), 🇪🇸 Español (ES), 🇫🇷 Français (FR), 🇩🇪 Deutsch (DE)
+  * 🇵🇹 Português (PT), 🇵🇱 Polski (PL), 🇺🇦 Ukraińska (UK), 🇹🇷 Türkçe (TR), 🇸🇦 العربية (AR)
+  * 🇨🇳 简体中文 (ZH), 🇯🇵 日本語 (JA), 🇰🇷 한국어 (KO), 🇮🇳 हिन्दी (HI), 🇷🇺 Русский (RU)
+
+---
+⭐ **Want all these features?** Support the project! Click the **Star** button in the top-right corner of this page to bring us closer to the goal and unlock the Ultimate Version for everyone!
+
 
