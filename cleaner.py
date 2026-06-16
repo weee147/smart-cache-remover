@@ -17,7 +17,6 @@ direct_deleted_files = 0
 quarantined_files = []
 total_space_freed = 0
 
-print("⚡ Running high-speed scan and cleanup...")
 start_time = time.time()
 
 # Create quarantine folder if it doesn't exist
@@ -35,19 +34,17 @@ for root_path, dirs, files in os.walk(CACHE_DIR):
 
             # Category A: Obvious Junk (Immediate deletion)
             if extension.lower() in ['.tmp', '.log', '.bak'] or file_size == 0:
-                # os.remove(file_path)
-              print(f"[TEST] Would delete: {file_path}")
+                os.remove(file_path)
                 direct_deleted_files += 1
                 total_space_freed += file_size
             
             # Category B: Suspicious/Old Files (Sent to quarantine for safety)
-            elif days_unused >50:
+            elif days_unused > 14:
                 target_quarantine = os.path.join(QUARANTINE_DIR, f)
                 # Handle filename duplicates in quarantine
                 if os.path.exists(target_quarantine):
                     target_quarantine = target_quarantine + "_duplicate"
-                # shutil.move(file_path, target_quarantine)
-              print(f"[TEST] Would quarantine: {file_path}")
+                shutil.move(file_path, target_quarantine)
                 quarantined_files.append((target_quarantine, file_path))
                 total_space_freed += file_size
 
@@ -89,3 +86,4 @@ if empty_trash:
         messagebox.showerror("Notice", "Could not empty the Recycle Bin (it might already be empty).")
 else:
     messagebox.showinfo("Finished!", "Cleanup complete. Recycle Bin preserved!")
+
