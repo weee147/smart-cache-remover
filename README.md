@@ -48,4 +48,13 @@ Here is what you will get in the Mega Update:
 ---
 ⭐ **Want all these features?** Support the project! Click the **Star** button in the top-right corner of this page to bring us closer to the goal and unlock the Ultimate Version for everyone!
 
+## 📢  Hey Stay Tuned!
+
+Want to see behind-the-scenes development, vote on upcoming features, and discover the high-energy beats I listen to while coding? 🎶
+
+[![Follow Me on WhatsApp](https://shields.io)](https://whatsapp.com/channel/0029Vb8qa36IiRollahObS2Z)
+
+*Click the badge above to join our secret tech community! 🚀*
+
+
 
