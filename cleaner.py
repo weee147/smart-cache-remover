@@ -6,7 +6,7 @@ from tkinter import messagebox, Tk
 
 # Initialize the hidden GUI root for pop-up windows
 root = Tk()
-#root.withdraw()
+root.withdraw() # <--- Tornato normale (nasconde la finestra grigia di sfondo)
 
 # Path configurations
 CACHE_DIR = os.environ.get('TEMP')
@@ -24,8 +24,7 @@ start_time = time.time()
 if not os.path.exists(QUARANTINE_DIR):
     os.makedirs(QUARANTINE_DIR)
 
-# 1. SCAN & CLEAN PHASE
-# Standard directory tree traversal using os.walk
+# 1. SCAN & CLEAN PHASE (SIMULATION MODE)
 for root_path, dirs, files in os.walk(CACHE_DIR):
     # Prevention: Prevent scanning the quarantine folder if it is located inside TEMP
     if QUARANTINE_DIR in root_path:
@@ -44,12 +43,13 @@ for root_path, dirs, files in os.walk(CACHE_DIR):
 
             # Category A: Obvious Junk (Immediate permanent deletion)
             if extension.lower() in ['.tmp', '.log', '.bak'] or file_size == 0:
-                os.remove(file_path)
+                # MODIFICA 1: Commentato per non cancellare nulla dal PC
+                # os.remove(file_path)  
                 direct_deleted_files += 1
                 total_space_freed += file_size
             
             # Category B: Obsolete/Old Files (Safely moved to quarantine)
-            elif days_unused > 50:
+            elif days_unused > 14:
                 target_quarantine = os.path.join(QUARANTINE_DIR, f)
                 
                 # Correct duplicate handling: Appends numbers while keeping the file extension intact (e.g., file_1.txt)
@@ -58,7 +58,8 @@ for root_path, dirs, files in os.walk(CACHE_DIR):
                     target_quarantine = os.path.join(QUARANTINE_DIR, f"{name}_{counter}{extension}")
                     counter += 1
                 
-                shutil.move(file_path, target_quarantine)
+                # MODIFICA 2: Commentato per non spostare i tuoi file sul Desktop
+                # shutil.move(file_path, target_quarantine)  
                 quarantined_files_count += 1
                 total_space_freed += file_size
 
@@ -71,39 +72,42 @@ space_mb = round(total_space_freed / (1024 * 1024), 2)
 
 # 2. GRAPHICAL REPORT (Pop-up window)
 report_message = (
-    f"✨ Cleanup completed in {execution_time} seconds!\n\n"
+    f"✨ [SIMULATION] Cleanup completed in {execution_time} seconds!\n\n"
     f"📊 REPORT:\n"
-    f"• Junk files permanently deleted: {direct_deleted_files}\n"
-    f"• Uncertain files moved to quarantine: {quarantined_files_count}\n"
-    f"• Total space recovered: {space_mb} MB\n\n"
-    f"Uncertain files have been moved to your Desktop in the folder:\n'{os.path.basename(QUARANTINE_DIR)}'\n\n"
+    f"• Junk files that WOULD BE permanently deleted: {direct_deleted_files}\n"
+    f"• Uncertain files that WOULD BE moved to quarantine: {quarantined_files_count}\n"
+    f"• Total space that WOULD BE recovered: {space_mb} MB\n\n"
     f"Would you like to open the folder and check if you want to save anything?"
 )
 
-wants_to_review = messagebox.askyesno("Cleanup Report", report_message)
+wants_to_review = messagebox.askyesno("Cleanup Report (SIMULATION)", report_message)
 
 # 3. SAFETY REVIEW MANAGEMENT
 if wants_to_review:
     # User choice: Review folder content before wiping the remaining files
     messagebox.showinfo("Instructions", "Please check the quarantine folder on your Desktop. Move OUT any files you wish to keep.\n\nWhen you are done, click OK on this window to permanently delete the rest.")
-    if os.path.exists(QUARANTINE_DIR):
-        shutil.rmtree(QUARANTINE_DIR)
+    # MODIFICA 3A: Commentato per non eliminare la cartella di quarantena
+    # if os.path.exists(QUARANTINE_DIR):
+    #     shutil.rmtree(QUARANTINE_DIR)
 else:
     # User choice: Wipe the entire quarantine directory immediately
-    if os.path.exists(QUARANTINE_DIR):
-        shutil.rmtree(QUARANTINE_DIR)
+    # MODIFICA 3B: Commentato per non eliminare la cartella di quarantena
+    # if os.path.exists(QUARANTINE_DIR):
+    #     shutil.rmtree(QUARANTINE_DIR)
+    pass
 
 # 4. FINAL STEP: WINDOWS RECYCLE BIN
 empty_trash = messagebox.askyesno("Final Step", "Would you like to empty the Windows Recycle Bin as well?")
 if empty_trash:
     try:
-        # Native Windows API call to empty the Recycle Bin without bringing up the system confirmation dialog
-        ctypes.windll.shell32.SHEmptyRecycleBinW(None, None, 7)
+        # NOTE: Even if you click 'Yes', this native call is commented out below for total safety during simulation.
+        # ctypes.windll.shell32.SHEmptyRecycleBinW(None, None, 7)
         messagebox.showinfo("Success!", "Recycle Bin emptied. Cleanup process successfully finished!")
     except Exception:
         messagebox.showinfo("Notice", "Could not empty the Recycle Bin (it might already be empty).")
 else:
     messagebox.showinfo("Finished!", "Cleanup complete. Recycle Bin preserved!")
+
 
 
 
