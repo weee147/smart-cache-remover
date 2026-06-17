@@ -39,7 +39,6 @@ Here is what you will get in the Mega Update:
 * **💎 Ultimate UI Overhaul:** A complete graphical redesign featuring a premium two-column layout, smooth animations, and a modern, polished dark aesthetic.
 * **📊 Real-Time Progress Bar:** A smooth, graphical leading bar to visually monitor scanning progress and file removal in real-time.
 * **🎮 Deep Gaming Cache Cleaning:** Integrated advanced modules specifically tailored to wipe heavy caches from **Minecraft, Roblox, and Fortnite** to reduce stuttering and free up disk space.
-* **📅 Background Auto-Scheduler Mode:** A dedicated control panel to schedule automated silent cleanups every 7 days or monthly, without you lifting a finger.
 * **🌐 Global Multi-Language Support (15 Languages):** A quick-toggle menu to instantly switch the entire software interface between 15 of the most widely spoken languages in the world, covering gamers and users globally:
   * 🇺🇸 English (EN), 🇮🇹 Italiano (IT), 🇪🇸 Español (ES), 🇫🇷 Français (FR), 🇩🇪 Deutsch (DE)
   * 🇵🇹 Português (PT), 🇵🇱 Polski (PL), 🇺🇦 Ukraińska (UK), 🇹🇷 Türkçe (TR), 🇸🇦 العربية (AR)
