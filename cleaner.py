@@ -6,7 +6,7 @@ from tkinter import messagebox, Tk
 
 # Initialize the hidden GUI root for pop-up windows
 root = Tk()
-root.withdraw()
+#root.withdraw()
 
 # Path configurations
 CACHE_DIR = os.environ.get('TEMP')
