@@ -15,9 +15,23 @@ A lightweight, high-speed, and open-source junk file cleaner built with Python. 
 * **Optional Recycle Bin Emptying:** Prompts for confirmation to empty the system trash at the very end.
 
 ## 🚀 How to Run
-1. Download `cleaner.py` to your computer.
-2. Make sure you have Python installed on your system.
-3. Run the script by double-clicking it or using your terminal:
+
+You do not need to install Python or run complex commands. Every time this repository is updated, GitHub automatically builds a ready-to-use Windows executable (`.exe`) file.
+
+### Option 1: Download the Pre-Built Executable (Recommended)
+1. Go to the **Actions** tab at the top of this GitHub repository.
+2. Click on the latest successful workflow run (the one with the green checkmark ✅).
+3. Scroll down to the **Artifacts** section at the bottom of the page.
+4. Download the `Windows-Cleaner-EXE` zip file.
+5. Extract the zip file and double-click `cleaner.exe` to run the cleaner instantly.
+
+*Note: Windows SmartScreen or your antivirus might flag the file as an unverified program because it is an standalone executable that manages files. You can safely click "More info" and then "Run anyway".*
+
+### Option 2: Run from Source Code (Advanced)
+If you prefer to run the raw Python script manually:
+1. Download the `cleaner.py` file to your computer.
+2. Ensure you have **Python 3.x** installed on your system.
+3. Open your terminal or Command Prompt, navigate to the folder, and run:
    ```bash
    python cleaner.py
    ```
@@ -34,7 +48,7 @@ But this is just the beginning. I have already designed a **Mega Update** that w
 ### 🎯 Community Goal: Help us reach 50 Stars! ⭐
 As soon as this repository hits **50 Stars**, I will instantly release the **Version 2.0 "Ultimate Edition"**, unlocking all advanced and highly requested features ALL AT ONCE!
 
-**OBVIOUSLY DECIDED BY YOU! ENTER IN OUR WHATTSAPP GROUP AND HELP US FOR CREATE THE NEW UPDATE**
+**OBVIOUSLY DECIDED BY YOU! ENTER IN OUR WHATSAPP GROUP AND HELP US TO CREATE THE NEW UPDATE**
 
 ## 📢  Hey Stay Tuned!
 
