@@ -34,20 +34,7 @@ But this is just the beginning. I have already designed a **Mega Update** that w
 ### 🎯 Community Goal: Help us reach 50 Stars! ⭐
 As soon as this repository hits **50 Stars**, I will instantly release the **Version 2.0 "Ultimate Edition"**, unlocking all advanced and highly requested features ALL AT ONCE!
 
-Here is what you will get in the Mega Update:
-
-* **💎 Ultimate UI Overhaul:** A complete graphical redesign featuring a premium two-column layout, smooth animations, and a modern, polished dark aesthetic.
-* **📊 Real-Time Progress Bar:** A smooth, graphical leading bar to visually monitor scanning progress and file removal in real-time.
-* **🎮 Deep Gaming Cache Cleaning:** Integrated advanced modules specifically tailored to wipe heavy caches from **Minecraft, Roblox, and Fortnite** to reduce stuttering and free up disk space.
-* **🌐 Global Multi-Language Support (15 Languages):** A quick-toggle menu to instantly switch the entire software interface between 15 of the most widely spoken languages in the world, covering gamers and users globally:
-  * 🇺🇸 English (EN), 🇮🇹 Italiano (IT), 🇪🇸 Español (ES), 🇫🇷 Français (FR), 🇩🇪 Deutsch (DE)
-  * 🇵🇹 Português (PT), 🇵🇱 Polski (PL), 🇺🇦 Ukraińska (UK), 🇹🇷 Türkçe (TR), 🇸🇦 العربية (AR)
-  * 🇨🇳 简体中文 (ZH), 🇯🇵 日本語 (JA), 🇰🇷 한국어 (KO), 🇮🇳 हिन्दी (HI), 🇷🇺 Русский (RU)
- 
-  * IF YOU WANT TO CHANG SOMETHING WE CAN TALK ABOUT IN CHAT
-
----
-⭐ **Want all these features?** Support the project! Click the **Star** button in the top-right corner of this page to bring us closer to the goal and unlock the Ultimate Version for everyone!
+**OBVIOUSLY DECIDED BY YOU! ENTER IN OUR WHATTSAPP GROUP AND HELP US FOR CREATE THE NEW UPDATE**
 
 ## 📢  Hey Stay Tuned!
 
