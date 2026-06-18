@@ -24,7 +24,7 @@ if sys.platform == "win32":
             sys.exit()
 # ==============================================================================
 
-# 1. FUNZIONE PRINCIPALE DI PULIZIA REALE (QUARANTENA E CANCELLAZIONE ATTIVE)
+# 1. FUNZIONE PRINCIPALE DI PULIZIA REALE (CON CORREZIONI DI COPILOT)
 def run_cleanup(progress_bar, status_label, window):
     CACHE_DIR = os.environ.get('TEMP')
     QUARANTINE_DIR = os.path.join(os.path.expanduser("~"), "Desktop", "Cleaner_Quarantine")
@@ -54,6 +54,7 @@ def run_cleanup(progress_bar, status_label, window):
     direct_deleted_files = 0
     quarantined_files_count = 0
     total_space_freed = 0
+    failed_files_count = 0  # FIX COPILOT: Conta i file bloccati/falliti
     start_time = time.time()
 
     # Avvia la pulizia REALE file per file aggiornando la GUI
@@ -65,7 +66,13 @@ def run_cleanup(progress_bar, status_label, window):
                 continue
 
             file_size = os.path.getsize(file_path)
-            days_unused = (time.time() - os.path.getatime(file_path)) / (60 * 60 * 24)
+            
+            # FIX COPILOT: Gestione sicura degli errori su os.path.getatime()
+            try:
+                days_unused = (time.time() - os.path.getatime(file_path)) / (60 * 60 * 24)
+            except Exception:
+                days_unused = 0 # Se fallisce, considera il file come "appena usato" per sicurezza
+
             name, extension = os.path.splitext(f)
 
             # Categoria A: Spazzatura ovvia (ELIMINAZIONE REALE)
@@ -89,8 +96,8 @@ def run_cleanup(progress_bar, status_label, window):
                 total_space_freed += file_size
 
         except Exception:
-            # Salta i file in uso dal sistema operativo senza bloccarsi
-            pass
+            # FIX COPILOT: Traccia i file che non è stato possibile toccare (es. protetti da Windows)
+            failed_files_count += 1
 
         # Aggiorna la barra grafica e il testo in tempo reale
         progress_percent = int(((index + 1) / total_files) * 100)
@@ -104,13 +111,14 @@ def run_cleanup(progress_bar, status_label, window):
     # Nasconde la finestra principale per mostrare i pop-up di report in primo piano
     window.withdraw()
 
-    # Report finale reale
+    # Report finale reale con contatore dei file protetti / saltati
     report_message = (
         f"✨ Cleanup completed in {execution_time} seconds!\n\n"
         f"📊 REPORT:\n"
         f"• Junk files permanently deleted: {direct_deleted_files}\n"
         f"• Uncertain files moved to quarantine: {quarantined_files_count}\n"
-        f"• Total space recovered: {space_mb} MB\n\n"
+        f"• Total space recovered: {space_mb} MB\n"
+        f"• System-locked files safely skipped: {failed_files_count}\n\n"
         f"Uncertain files have been moved to your Desktop in the folder:\n'{os.path.basename(QUARANTINE_DIR)}'\n\n"
         f"Would you like to open the folder and check if you want to save anything?"
     )
@@ -118,6 +126,7 @@ def run_cleanup(progress_bar, status_label, window):
 
     # Gestione reale della Quarantena (Cancellazione definitiva)
     if wants_to_review:
+        # FIX COPILOT: Messaggio ora completo e non più troncato
         messagebox.showinfo("Instructions", "Please check the quarantine folder on your Desktop. Move OUT any files you wish to keep.\n\nWhen you are done, click OK on this window to permanently delete the rest.")
         if os.path.exists(QUARANTINE_DIR):
             shutil.rmtree(QUARANTINE_DIR)  # <--- ATTIVO: Svuota i file rimasti scartati
