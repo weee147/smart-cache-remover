@@ -2,8 +2,15 @@ import os
 import time
 import shutil
 import ctypes
+import sys
 from tkinter import Tk, Label, Button, messagebox
 from tkinter.ttk import Progressbar
+
+# TRUCCO PER NASCONDERE IL TERMINALE (PROMPT) ALL'AVVIO
+if sys.platform == "win32":
+    whnd = ctypes.windll.kernel32.GetConsoleWindow()
+    if whnd != 0:
+        ctypes.windll.user32.ShowWindow(whnd, 0)
 
 # 1. FUNZIONE DI PULIZIA IN MODALITÀ SIMULAZIONE (DRY-RUN)
 def run_cleanup(progress_bar, status_label, window):
@@ -161,8 +168,3 @@ def create_gui():
 
 if __name__ == "__main__":
     create_gui()
-
-
-
-
-
