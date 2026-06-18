@@ -17,14 +17,14 @@ if sys.platform == "win32":
         ctypes.windll.user32.ShowWindow(whnd, 0)
 # ==============================================================================
 
-# FUNZIONE DI PULIZIA DIZIONARIO UNIFICATA (MODALITÀ SIMULAZIONE PROTETTA CON CANCELLETTI)
+# FUNZIONE DI PULIZIA DIZIONARIO UNIFICATA (VERSIONE REALE E OPERATIVA)
 def run_cleanup_process(progress_bar, status_label, window, is_simulation=True):
     CACHE_DIR = os.environ.get('TEMP')
     QUARANTINE_DIR = os.path.join(os.path.expanduser("~"), "Desktop", "Cleaner_Quarantine")
     
-    # MODIFICA DI SICUREZZA: Commentato per non creare cartelle reali sul Desktop
-    # if not is_simulation and not os.path.exists(QUARANTINE_DIR):
-    #     os.makedirs(QUARANTINE_DIR)
+    # Crea la cartella reale di quarantena sul Desktop solo se NON siamo in simulazione
+    if not is_simulation and not os.path.exists(QUARANTINE_DIR):
+        os.makedirs(QUARANTINE_DIR)
 
     # Raccoglie tutti i file per calcolare la percentuale esatta della barra
     all_files = []
@@ -46,6 +46,7 @@ def run_cleanup_process(progress_bar, status_label, window, is_simulation=True):
     direct_deleted_files = 0
     quarantined_files_count = 0
     total_space_freed = 0
+    failed_files_count = 0
     start_time = time.time()
 
     for index, (root_path, f) in enumerate(all_files):
@@ -55,15 +56,18 @@ def run_cleanup_process(progress_bar, status_label, window, is_simulation=True):
                 continue
 
             file_size = os.path.getsize(file_path)
-            days_unused = (time.time() - os.path.getatime(file_path)) / (60 * 60 * 24)
+            
+            try:
+                days_unused = (time.time() - os.path.getatime(file_path)) / (60 * 60 * 24)
+            except Exception:
+                days_unused = 0
+
             name, extension = os.path.splitext(f)
 
             # Categoria A: Spazzatura ovvia
             if extension.lower() in ['.tmp', '.log', '.bak'] or file_size == 0:
                 if not is_simulation:
-                    # BLOCCO DI SICUREZZA: Commentato per non cancellare nulla dal PC
-                    # os.remove(file_path)  
-                    pass
+                    os.remove(file_path)  # ATTIVO: Cancella fisicamente dal PC
                 direct_deleted_files += 1
                 total_space_freed += file_size
             
@@ -76,20 +80,18 @@ def run_cleanup_process(progress_bar, status_label, window, is_simulation=True):
                     counter += 1
                 
                 if not is_simulation:
-                    # BLOCCO DI SICUREZZA: Commentato per non spostare i tuoi file sul Desktop
-                    # shutil.move(file_path, target_quarantine)  
-                    pass
+                    shutil.move(file_path, target_quarantine)  # ATTIVO: Sposta sul Desktop
                 quarantined_files_count += 1
                 total_space_freed += file_size
 
         except Exception:
-            # Salta i file bloccati da Windows senza rallentare o bloccarsi
-            pass
+            # Traccia i file bloccati/falliti (come suggerito da Copilot)
+            failed_files_count += 1
 
         # Aggiorna la barra grafica e il testo in tempo reale
         progress_percent = int(((index + 1) / total_files) * 100)
         progress_bar['value'] = progress_percent
-        prefix = "Simulating" if is_simulation else "Cleaning (Simulated)"
+        prefix = "Simulating" if is_simulation else "Cleaning"
         status_label.config(text=f"{prefix}: {progress_percent}% ({index + 1}/{total_files} files)")
         window.update()
 
@@ -99,47 +101,43 @@ def run_cleanup_process(progress_bar, status_label, window, is_simulation=True):
     status_label.config(text="Status: Completed!")
     window.update()
 
-    # IMPOSTAZIONE DEL REPORT (FORZATO IN MODALITÀ FINTA/SIMULATA)
-    mode_title = "Cleanup Report (SIMULATION)" if is_simulation else "Cleanup Report (SIMULATED)"
-    would_txt = "WOULD BE "
+    # IMPOSTAZIONE DEL REPORT DINAMICO
+    mode_title = "Cleanup Report (SIMULATION)" if is_simulation else "Cleanup Report"
+    would_txt = "WOULD BE " if is_simulation else ""
     
     report_message = (
         f"✨ Process completed in {execution_time} seconds!\n\n"
         f"📊 REPORT:\n"
         f"• Junk files {would_txt}permanently deleted: {direct_deleted_files}\n"
         f"• Uncertain files {would_txt}moved to quarantine: {quarantined_files_count}\n"
-        f"• Total space {would_txt}recovered: {space_mb} MB\n\n"
+        f"• Total space {would_txt}recovered: {space_mb} MB\n"
+        f"• System-locked files safely skipped: {failed_files_count}\n\n"
     )
     
     if not is_simulation:
-        report_message += f"Uncertain files {would_txt}moved to your Desktop in the folder:\n'{os.path.basename(QUARANTINE_DIR)}'\n\nWould you like to open the folder and check if you want to save anything?"
+        report_message += f"Uncertain files have been moved to your Desktop in the folder:\n'{os.path.basename(QUARANTINE_DIR)}'\n\nWould you like to open the folder and check if you want to save anything?"
         wants_to_review = messagebox.askyesno(mode_title, report_message, parent=window)
         
         if wants_to_review:
             messagebox.showinfo("Instructions", "Please check the quarantine folder on your Desktop. Move OUT any files you wish to keep.\n\nWhen you are done, click OK on this window to permanently delete the rest.", parent=window)
-            # BLOCCO DI SICUREZZA: Commentato per non eliminare cartelle reali
-            # if os.path.exists(QUARANTINE_DIR):
-            #     shutil.rmtree(QUARANTINE_DIR)
+            if os.path.exists(QUARANTINE_DIR):
+                shutil.rmtree(QUARANTINE_DIR)  # ATTIVO: Elimina i file scartati dalla quarantena
         else:
-            # BLOCCO DI SICUREZZA: Commentato per non eliminare cartelle reali
-            # if os.path.exists(QUARANTINE_DIR):
-            #     shutil.rmtree(QUARANTINE_DIR)
-            pass
+            if os.path.exists(QUARANTINE_DIR):
+                shutil.rmtree(QUARANTINE_DIR)  # ATTIVO: Svuota la quarantena subito
     else:
         report_message += "This was a safe simulation. No files were modified or deleted."
         messagebox.showinfo(mode_title, report_message, parent=window)
 
-    # SVUOTAMENTO CESTINO DI WINDOWS (FINTO / SIMULATO)
+    # SVUOTAMENTO CESTINO DI WINDOWS
     empty_trash = messagebox.askyesno("Final Step", "Would you like to empty the Windows Recycle Bin as well?", parent=window)
     if empty_trash:
         if not is_simulation:
-            # BLOCCO DI SICUREZZA: Commentato per non svuotare il cestino reale
-            # try:
-            #     ctypes.windll.shell32.SHEmptyRecycleBinW(None, None, 7)
-            #     messagebox.showinfo("Success!", "Recycle Bin emptied. Cleanup finished!", parent=window)
-            # except Exception:
-            #     messagebox.showinfo("Notice", "Could not empty the Recycle Bin.", parent=window)
-            messagebox.showinfo("Simulation", "[SIMULATION] Recycle Bin would be emptied successfully!", parent=window)
+            try:
+                ctypes.windll.shell32.SHEmptyRecycleBinW(None, None, 7)  # ATTIVO: Svuota il cestino vero
+                messagebox.showinfo("Success!", "Recycle Bin emptied. Cleanup finished!", parent=window)
+            except Exception:
+                messagebox.showinfo("Notice", "Could not empty the Recycle Bin.", parent=window)
         else:
             messagebox.showinfo("Simulation", "[SIMULATION] Recycle Bin would be emptied successfully!", parent=window)
     else:
@@ -150,12 +148,12 @@ def run_cleanup_process(progress_bar, status_label, window, is_simulation=True):
 # CREAZIONE DELLA FINESTRA PRINCIPALE (GUI)
 def create_gui():
     window = Tk()
-    window.title("Smart Cache Cleaner ⚡ [PROTECTED DEMO]")
+    window.title("Smart Cache Cleaner ⚡")
     window.geometry("460x220")
     window.resizable(False, False)
     window.eval('tk::PlaceWindow . center')
 
-    title_label = Label(window, text="Smart Cache Cleaner v1.3.0 (Protected Demo)", font=("Arial", 12, "bold"))
+    title_label = Label(window, text="Smart Cache Cleaner v1.3.0", font=("Arial", 12, "bold"))
     title_label.pack(pady=10)
 
     status_label = Label(window, text="Status: Choose an action below", font=("Arial", 10))
@@ -185,7 +183,7 @@ def create_gui():
     )
     sim_button.pack(side="left", padx=5)
 
-    # BOTTONE VERDE: PULIZIA (CANCELLATA DAI CANCELLETTI, ORA AGISCE COME ULTERIORE SIMULAZIONE)
+    # BOTTONE VERDE: PULIZIA REALE E COMPLETA
     clean_button = Button(
         btn_frame, 
         text="REAL CLEAN", 
@@ -213,3 +211,4 @@ def create_gui():
 
 if __name__ == "__main__":
     create_gui()
+
