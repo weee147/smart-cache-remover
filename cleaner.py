@@ -6,11 +6,23 @@ import sys
 from tkinter import Tk, Label, Button, messagebox
 from tkinter.ttk import Progressbar
 
-# TRUCCO PER NASCONDERE IL TERMINALE (PROMPT) ALL'AVVIO
+# ==============================================================================
+# 🛡️ PROTEZIONE ANTINERO: CHIUDE IL TERMINALE ALL'ISTANTE ALL'AVVIO
+# ==============================================================================
 if sys.platform == "win32":
+    # Nasconde immediatamente la finestra del terminale corrente
     whnd = ctypes.windll.kernel32.GetConsoleWindow()
     if whnd != 0:
         ctypes.windll.user32.ShowWindow(whnd, 0)
+    
+    # Se Windows ha usato python.exe (mostrando il prompt), forza il riavvio con pythonw.exe (invisibile)
+    if sys.executable.endswith("python.exe"):
+        script_path = os.path.abspath(__file__)
+        pythonw_path = sys.executable.replace("python.exe", "pythonw.exe")
+        if os.path.exists(pythonw_path):
+            os.execv(pythonw_path, [pythonw_path, script_path])
+            sys.exit()
+# ==============================================================================
 
 # 1. FUNZIONE DI PULIZIA IN MODALITÀ SIMULAZIONE (DRY-RUN)
 def run_cleanup(progress_bar, status_label, window):
