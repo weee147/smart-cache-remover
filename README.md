@@ -1,129 +1,84 @@
-# ⚡ Smart Cache Cleaner v2.0.0
+# ⚡ Smart Cache Cleaner v1.3.0 (Protected Demo)
 
-### 🎉 NOW WITH FULL CLEANING FEATURES!
-This is **no longer a simulation**. The software now performs **real, permanent file deletion and optimization** with a professional quarantine system. Always run a simulation first to preview what will be deleted!
+### 🎉 NOW WITH SIMULATION & ACTION BUTTONS!
+This version features our brand-new interactive interface! You can now choose between running a safe simulation or a real cleanup. **However, for maximum safety in this community demo, all destructive actions are safely locked via code constraints.** It is 100% safe to test every button!
 
 ---
 
-A lightweight, high-speed, and open-source system cleaner built with Python. It scans temporary files, removes junk, quarantines old files, and recovers disk space—all while keeping your personal data safe.
+A lightweight, high-speed, and open-source system analyzer built with Python. It scans temporary files, estimates system cache recovery, and showcases our upcoming quarantine system—all while keeping your personal data completely untouched.
 
 ## ✨ Core Features
 
-### 🗑️ Smart Cleanup System
-* **Real File Deletion:** Automatically removes `.tmp`, `.log`, `.bak`, `.cache`, `.temp` files (configurable).
-* **Intelligent Quarantine:** Old & unused files are moved to a secure quarantine folder on your Desktop instead of immediate deletion.
-* **Safety-First Approach:** Review quarantined files before permanent deletion—restore anything you need.
-* **Dry-Run Mode:** Run a simulation first to see exactly what will be cleaned, no files touched!
+### 🗑️ Smart Cleanup Showcase
+* **Obvious Junk Detection:** Automatically detects `.tmp`, `.log`, and `.bak` files that are cluttering your space.
+* **Intelligent Quarantine Preview:** Identifies files older than 14 days and showcases how they will be moved to a secure Desktop folder in the final version.
+* **Dual Operational Modes:** Features separate paths for a simulation preview and a real operational workflow.
+* **Terminal-Free GUI:** Designed with built-in Windows protections to instantly hide the black console window on startup, showing only the clean graphical interface.
 
 ### ⚡ Performance & Safety
 * **High-Speed Scanning:** Analyzes thousands of temporary files in seconds.
-* **Real-Time Progress Bar:** Live GUI showing cleanup progress and file count.
-* **100% Privacy & Safety:** Runs entirely offline on your local computer. Zero telemetry.
-* **Symlink Protection:** Automatically skips symbolic links and system-critical files.
-* **Detailed Logging:** All operations logged to `Desktop/Cleaner_Logs/` for audit trails.
-
-### 🎯 Advanced Features
-* **JSON Configuration:** Fully customizable via `cleaner_config.json`.
-* **Automatic Trash Cleanup:** Optional automatic Windows Recycle Bin emptying.
-* **Error Resilience:** Gracefully handles permission errors and inaccessible files.
-* **Multi-threaded GUI:** Non-blocking interface with cancellation support.
-* **Detailed Report:** Post-cleanup summary with space freed, files moved, failed operations.
-
-## 📋 Configuration
-
-The tool creates a config file on first run: `~/Desktop/cleaner_config.json`
-
-```json
-{
-    "junk_extensions": [".tmp", ".log", ".bak", ".cache", ".temp"],
-    "days_threshold": 14,
-    "enable_logging": true,
-    "scan_subdirectories": true,
-    "file_size_threshold_kb": 0,
-    "timeout_per_file_seconds": 5
-}
-```
-
-**Customize these settings:**
-- `junk_extensions`: Add/remove file types to target
-- `days_threshold`: Files unused longer than this are quarantined (in days)
-- `file_size_threshold_kb`: Minimum file size to consider (0 = empty files)
-- `enable_logging`: Toggle detailed operation logs
+* **Real-Time Progress Bar:** Beautiful live GUI showing progress percentage and file counts dynamically.
+* **100% Privacy & Safety:** Runs entirely offline on your local computer. Zero tracking, zero telemetry.
+* **Protected Demo Code:** All actual file modifications, deletions, and Recycle Bin emptying are safely commented out in the source code for total peace of mind.
 
 ## 🚀 How to Run
 
+To ensure maximum safety and transparency, this software runs directly from its Python source code. This bypasses rigid Windows restrictions (like Smart App Control) since you can read every single line of code yourself.
+
 ### Step 1: Install Python
-1. Open **Microsoft Store** on your Windows PC.
+1. Open the **Microsoft Store** on your Windows PC.
 2. Search for **Python** (version 3.11, 3.12, or later recommended).
-3. Click **Get** → **Install**. Official, free, takes seconds.
+3. Click **Get** → **Install**. Official, free, and takes seconds.
 
 ### Step 2: Download & Run
-1. Download `cleaner.py` from this repository.
-2. Double-click the file to launch instantly!
+1. Download the `cleaner.py` (or save it as `cleaner.pyw`) file from this repository.
+2. **Double-click** the file to launch it instantly!
 
-**From Terminal (Advanced):**
+*Alternative for developers (via Terminal):*
 ```bash
 python cleaner.py
 ```
 
 ## 🎮 Using the GUI
 
-| Button | Action |
-|--------|--------|
-| **▶ PULIZIA REALE** | Start real cleaning (scans → deletes junk → quarantines old files) |
-| **🔍 SIMULAZIONE** | Preview mode: see what will be cleaned without any changes |
-| **⏹ ANNULLA** | Stop the operation at any time |
+| Button | Action | Color |
+|--------|--------|-------|
+| **RUN SIMULATION** | Standard preview mode: scans files and calculates potential space recovered safely. | 🔴 Red |
+| **REAL CLEAN** | Simulates the full workflow (Scan → Quarantine prompt → Recycle Bin prompt) with zero actual damage. | 🟢 Green |
+| **CANCEL** | Instantly closes the application safely at any time. | ⚫ Gray |
 
-### Cleanup Workflow
-1. **Scan Phase:** Analyzes all files in `%TEMP%` directory
-2. **Action Phase:** 
-   - Direct deletion for obvious junk files
-   - Quarantine for old/unused files (review first!)
-3. **Review Phase:** Inspect quarantined files, restore anything important
-4. **Trash Phase:** Option to empty Windows Recycle Bin
-5. **Report:** Summary with space freed and operation stats
-
-## 📊 Output Files
-
-After cleanup, you'll find:
-- **Cleaner_Quarantine** (Desktop): Temporarily holds old files for review
-- **Cleaner_Logs** (Desktop): Detailed operation logs with timestamps
+### The Planned Workflow (How the final version will act)
+1. **Scan Phase:** Analyzes all files in the Windows `%TEMP%` directory.
+2. **Action Phase:** Direct deletion for obvious junk and a dedicated Desktop Quarantine folder for older files.
+3. **Review Phase:** Prompts the user to inspect quarantined files before final deletion.
+4. **Trash Phase:** Offers a native one-click option to empty the Windows Recycle Bin.
 
 ## 🛡️ Safety Features
 
-✅ **Symlink Detection:** Never follows symbolic links (prevents system damage)  
-✅ **Permission Handling:** Gracefully skips files you don't have access to  
-✅ **Quarantine System:** Review before permanent deletion  
-✅ **Backup Logs:** Every operation logged for recovery reference  
-✅ **Error Recovery:** Continues processing on individual file errors  
-✅ **Cancellable:** Stop anytime without partial damage  
+✅ **Zero File Risk:** Deletion and movement functions are completely disabled via code blocks in this release.  
+✅ **Symlink Detection:** Automatically skips symbolic links to prevent any directory escaping.  
+✅ **Error Resilience:** Gracefully handles system-locked or permission-restricted files without crashing.  
+✅ **Button Locking:** Disables all buttons immediately after a click to prevent accidental double-execution.
 
 ## 📝 License
 
 Distributed under the **MIT License**. See `LICENSE` for full details.
 
-## 🚀 Roadmap
+## 🌟 Show Your Support & Unlock V2.0!
 
-- ✅ v2.0.0 (Current) - Full cleaning + quarantine system
-- 🔜 v2.1 - Cloud backup integration for quarantined files
-- 🔜 v2.2 - Browser cache & temp profile cleaning
-- 🔜 v2.3 - Scheduled automated cleanup tasks
-- 🔜 v3.0 - Advanced registry cleaning & optimization
+This project scales with the community! Help us reach our milestones to unlock the full real-world utility:
 
-## 🌟 Show Your Support
+### 🎯 Community Goal: Help us reach 50 Stars! ⭐
+As soon as this repository hits **50 Stars**, I will instantly release the **Version 2.0 "Ultimate Edition"**, removing the code blocks and unlocking the real operational cleaning features ALL AT ONCE!
 
-If this tool has saved you disk space and helped your PC run faster, please:
-- ⭐ **Star this repository**
-- 🐛 **Report bugs** via GitHub Issues
-- 💡 **Suggest features** you'd like to see
-- 🤝 **Contribute** improvements via Pull Requests
+**OBVIOUSLY DECIDED BY YOU! ENTER IN OUR WHATSAPP GROUP AND HELP US TO CREATE THE NEW UPDATE**
+
+Want to see behind-the-scenes development, vote on upcoming updates, and discover the high-energy beats I listen to while coding? 🎶
+
+[![Follow Me on WhatsApp](https://shields.io)](https://whatsapp.com/channel/0029Vb8qa36IiRollahObS2Z)
+
+*Click the badge above to join our secret tech community! 🚀*
 
 ---
 
-**⚠️ DISCLAIMER:** This software modifies your file system. Always:
-1. Backup important data first
-2. Run simulation mode before actual cleanup
-3. Review quarantined files before final deletion
-4. Use at your own risk
-
-**Made with ❤️ for system optimization | Windows Only (for now)**
+**Made with ❤️ for system optimization | Windows Only**
