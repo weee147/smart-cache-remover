@@ -32,7 +32,9 @@ To ensure maximum safety and transparency, this software runs directly from its 
 
 ### Step 2: Download & Run
 1. Download the `cleaner.py` (or save it as `cleaner.pyw`) file from this repository.
-2. **Double-click** the file to launch it instantly!![Uploading 20260618-1329-48.9802185.gif…]()
+2. **Double-click** the file to launch it instantly!
+Uploading Registrazione 2026-06-18 151832.mp4…
+
 
 
 
