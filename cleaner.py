@@ -127,7 +127,7 @@ def run_cleanup(progress_bar, status_label, window):
     # Gestione reale della Quarantena (Cancellazione definitiva)
     if wants_to_review:
         # FIX COPILOT: Messaggio ora completo e non più troncato
-        messagebox.showinfo("Instructions", "Please check the quarantine folder on your Desktop. Move OUT any files you wish to keep.\n\nWhen you are done, click OK on this window to permanently delete the rest.")
+        messagebox.showinfo("Instructions", "Please check the quarantine folder on your Desktop. Move OUT any files you wish to keep.\n\nWhen you are done, click OK on this window to permanently delete the remaining files.")
         if os.path.exists(QUARANTINE_DIR):
             shutil.rmtree(QUARANTINE_DIR)  # <--- ATTIVO: Svuota i file rimasti scartati
     else:
