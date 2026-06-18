@@ -28,7 +28,7 @@ To ensure maximum safety and transparency, this software runs directly from its 
 2. Go to the folder where you saved the file.
 3. **Double-click** `cleaner.py` to run it instantly!
 
-*Alternative for developers (via Terminal):*
+*Alternative for developers (from terminal):*
 Open your Command Prompt (`cmd`), navigate to the file directory, and type:
 ```bash
 python cleaner.py
