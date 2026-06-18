@@ -1,3 +1,4 @@
+<img width="800" height="495" alt="ezgif-61d550fd524bff96" src="https://github.com/user-attachments/assets/feacb348-65bc-4da8-9dda-234cc4b04bdd" />
 # ⚡ Smart Cache Cleaner v1.3.0 (Protected Demo)
 
 ### 🎉 NOW WITH SIMULATION & ACTION BUTTONS!
@@ -33,8 +34,6 @@ To ensure maximum safety and transparency, this software runs directly from its 
 ### Step 2: Download & Run
 1. Download the `cleaner.py` (or save it as `cleaner.pyw`) file from this repository.
 2. **Double-click** the file to launch it instantly!
-Uploading Registrazione 2026-06-18 151832.mp4…
-
 
 
 
@@ -43,7 +42,8 @@ Uploading Registrazione 2026-06-18 151832.mp4…
 python cleaner.py
 ```
 
-## 🎮 Using the GUI
+## 🎮 Using the GUI<img width="800" height="495" alt="gif-ezgif com-optimize" src="https://github.com/user-attachments/assets/9cac832e-53dc-4c1a-8444-2b16ca66c00f" />
+
 
 | Button | Action | Color |
 |--------|--------|-------|
