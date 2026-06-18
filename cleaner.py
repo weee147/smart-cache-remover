@@ -395,7 +395,7 @@ def create_gui():
             start_button.config(state="disabled"),
             simulate_btn.config(state="disabled"),
             cancel_button.config(state="normal"),
-            Thread(target=run_cleanup, args=(progress_bar, status_label, window, cancel_flag, False), daemon=True).start()
+            Thread(target=run_cleanup, args=(progress_bar, status_label, window, cancel_flag, False), daemon=False).start()
         ]
     )
     start_button.pack(side=LEFT, padx=5)
@@ -412,7 +412,7 @@ def create_gui():
             start_button.config(state="disabled"),
             simulate_btn.config(state="disabled"),
             cancel_button.config(state="normal"),
-            Thread(target=run_cleanup, args=(progress_bar, status_label, window, cancel_flag, True), daemon=True).start()
+            Thread(target=run_cleanup, args=(progress_bar, status_label, window, cancel_flag, True), daemon=False).start()
         ]
     )
     simulate_btn.pack(side=LEFT, padx=5)
