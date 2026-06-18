@@ -7,26 +7,36 @@ from tkinter import Tk, Label, Button, messagebox
 from tkinter.ttk import Progressbar
 
 # ==============================================================================
-# 🛡️ METODO COMPATIBILE: NASCONDE IL TERMINALE NEI PRIMI MILLISECONDI
+# 🛡️ PROTEZIONE ANTINERO: CHIUDE IL TERMINALE ALL'ISTANTE ALL'AVVIO
 # ==============================================================================
 if sys.platform == "win32":
-    # Recupera l'identificativo della finestra nera del prompt dei comandi
+    # Nasconde immediatamente la finestra del terminale corrente
     whnd = ctypes.windll.kernel32.GetConsoleWindow()
     if whnd != 0:
-        # La nasconde all'istante (0 = SW_HIDE) senza riavviare lo script
         ctypes.windll.user32.ShowWindow(whnd, 0)
+    
+    # Se Windows ha usato python.exe (mostrando il prompt), forza il riavvio con pythonw.exe (invisibile)
+    if sys.executable.endswith("python.exe"):
+        script_path = os.path.abspath(__file__)
+        pythonw_path = sys.executable.replace("python.exe", "pythonw.exe")
+        if os.path.exists(pythonw_path):
+            os.execv(pythonw_path, [pythonw_path, script_path])
+            sys.exit()
 # ==============================================================================
 
-# FUNZIONE DI PULIZIA UNIFICATA (GESTISCE SIA REAL CHE SIMULATION)
-def run_cleanup_process(progress_bar, status_label, window, is_simulation=True):
+# 1. FUNZIONE DI PULIZIA IN MODALITÀ SIMULAZIONE (DRY-RUN)
+def run_cleanup(progress_bar, status_label, window):
     CACHE_DIR = os.environ.get('TEMP')
     QUARANTINE_DIR = os.path.join(os.path.expanduser("~"), "Desktop", "Cleaner_Quarantine")
     
-    if not is_simulation and not os.path.exists(QUARANTINE_DIR):
+    # Crea la cartella sul Desktop se non esiste (solo per calcolare i percorsi)
+    if not os.path.exists(QUARANTINE_DIR):
         os.makedirs(QUARANTINE_DIR)
 
+    # Raccoglie prima tutti i file per calcolare la percentuale esatta della barra
     all_files = []
     for root_path, dirs, files in os.walk(CACHE_DIR):
+        # Sicurezza: Evita di scansionare la quarantena stessa se si trova dentro TEMP
         if QUARANTINE_DIR in root_path:
             continue
         for f in files:
@@ -35,175 +45,136 @@ def run_cleanup_process(progress_bar, status_label, window, is_simulation=True):
     total_files = len(all_files)
     
     if total_files == 0:
-        status_label.config(text="Status: No files found.")
+        status_label.config(text="Status: No files found to clean.")
         progress_bar['value'] = 100
-        messagebox.showinfo("Done", "Your system is already clean!", parent=window)
+        messagebox.showinfo("Done", "Your system is already clean!")
         window.destroy()
         return
 
     direct_deleted_files = 0
     quarantined_files_count = 0
     total_space_freed = 0
-    failed_files_count = 0
     start_time = time.time()
 
+    # Avvia la simulazione file per file aggiornando la GUI
     for index, (root_path, f) in enumerate(all_files):
         file_path = os.path.join(root_path, f)
         try:
+            # Sicurezza: Salta i collegamenti simbolici
             if os.path.islink(file_path):
                 continue
 
             file_size = os.path.getsize(file_path)
-            
-            try:
-                days_unused = (time.time() - os.path.getatime(file_path)) / (60 * 60 * 24)
-            except Exception:
-                days_unused = 0
-
+            days_unused = (time.time() - os.path.getatime(file_path)) / (60 * 60 * 24)
             name, extension = os.path.splitext(f)
 
-            # Categoria A: Spazzatura ovvia
+            # Categoria A: Spazzatura ovvia (Simulazione eliminazione)
             if extension.lower() in ['.tmp', '.log', '.bak'] or file_size == 0:
-                if not is_simulation:
-                    os.remove(file_path)
+                # BLOCCO DI SICUREZZA: Commentato per non cancellare nulla dal PC
+                # os.remove(file_path)  
                 direct_deleted_files += 1
                 total_space_freed += file_size
             
-            # Categoria B: File vecchi o inutilizzati
+            # Categoria B: File vecchi o inutilizzati (Simulazione spostamento)
             elif days_unused > 14:
                 target_quarantine = os.path.join(QUARANTINE_DIR, f)
+                
+                # Gestione corretta dei duplicati
                 counter = 1
                 while os.path.exists(target_quarantine):
                     target_quarantine = os.path.join(QUARANTINE_DIR, f"{name}_{counter}{extension}")
                     counter += 1
                 
-                if not is_simulation:
-                    shutil.move(file_path, target_quarantine)
+                # BLOCCO DI SICUREZZA: Commentato per non spostare i tuoi file sul Desktop
+                # shutil.move(file_path, target_quarantine)  
                 quarantined_files_count += 1
                 total_space_freed += file_size
 
         except Exception:
-            failed_files_count += 1
+            # Salta i file in uso senza bloccare la simulazione
+            pass
 
+        # Aggiorna la barra grafica e il testo in tempo reale
         progress_percent = int(((index + 1) / total_files) * 100)
         progress_bar['value'] = progress_percent
-        prefix = "Simulating" if is_simulation else "Cleaning"
-        status_label.config(text=f"{prefix}: {progress_percent}% ({index + 1}/{total_files} files)")
-        window.update()
+        status_label.config(text=f"Simulating: {progress_percent}% ({index + 1}/{total_files} files)")
+        window.update() # Forza l'aggiornamento visivo della barra
 
     execution_time = round(time.time() - start_time, 2)
     space_mb = round(total_space_freed / (1024 * 1024), 2)
 
-    status_label.config(text="Status: Process completed!")
-    window.update()
+    # Nasconde temporaneamente la finestra principale per mostrare i pop-up di report
+    window.withdraw()
 
-    # REPORT DINAMICO FORZATO IN PRIMO PIANO
-    mode_title = "Cleanup Report (SIMULATION)" if is_simulation else "Cleanup Report"
-    would_txt = "WOULD BE " if is_simulation else ""
-    
+    # Report finale (Pop-up di simulazione)
     report_message = (
-        f"✨ Process completed in {execution_time} seconds!\n\n"
+        f"✨ [SIMULATION] Cleanup completed in {execution_time} seconds!\n\n"
         f"📊 REPORT:\n"
-        f"• Junk files {would_txt}permanently deleted: {direct_deleted_files}\n"
-        f"• Uncertain files {would_txt}moved to quarantine: {quarantined_files_count}\n"
-        f"• Total space {would_txt}recovered: {space_mb} MB\n"
-        f"• System-locked files safely skipped: {failed_files_count}\n\n"
+        f"• Junk files that WOULD BE permanently deleted: {direct_deleted_files}\n"
+        f"• Uncertain files that WOULD BE moved to quarantine: {quarantined_files_count}\n"
+        f"• Total space that WOULD BE recovered: {space_mb} MB\n\n"
+        f"Would you like to open the folder and check if you want to save anything?"
     )
-    
-    if not is_simulation:
-        report_message += f"Uncertain files have been moved to your Desktop in the folder:\n'{os.path.basename(QUARANTINE_DIR)}'\n\nWould you like to open the folder and check if you want to save anything?"
-        wants_to_review = messagebox.askyesno(mode_title, report_message, parent=window)
-        
-        if wants_to_review:
-            messagebox.showinfo("Instructions", "Please check the quarantine folder on your Desktop. Move OUT any files you wish to keep.\n\nWhen you are done, click OK on this window to permanently delete the rest.", parent=window)
-            if os.path.exists(QUARANTINE_DIR):
-                shutil.rmtree(QUARANTINE_DIR)
-        else:
-            if os.path.exists(QUARANTINE_DIR):
-                shutil.rmtree(QUARANTINE_DIR)
-    else:
-        report_message += "This was a safe simulation. No files were modified or deleted."
-        messagebox.showinfo(mode_title, report_message, parent=window)
+    wants_to_review = messagebox.askyesno("Cleanup Report (SIMULATION)", report_message)
 
-    # SVUOTAMENTO CESTINO
-    empty_trash = messagebox.askyesno("Final Step", "Would you like to empty the Windows Recycle Bin as well?", parent=window)
+    # Gestione simulata della Quarantena
+    if wants_to_review:
+        messagebox.showinfo("Instructions", "Please check the quarantine folder on your Desktop. Move OUT any files you wish to keep.\n\nWhen you are done, click OK on this window to permanently delete the rest.")
+        # BLOCCO DI SICUREZZA: Commentato per non eliminare la cartella
+        # if os.path.exists(QUARANTINE_DIR):
+        #     shutil.rmtree(QUARANTINE_DIR)
+    else:
+        # BLOCCO DI SICUREZZA: Commentato per non eliminare la cartella
+        # if os.path.exists(QUARANTINE_DIR):
+        #     shutil.rmtree(QUARANTINE_DIR)
+        pass
+
+    # Svuotamento Cestino di Windows (Simulato)
+    empty_trash = messagebox.askyesno("Final Step", "Would you like to empty the Windows Recycle Bin as well?")
     if empty_trash:
-        if not is_simulation:
-            try:
-                ctypes.windll.shell32.SHEmptyRecycleBinW(None, None, 7)
-                messagebox.showinfo("Success!", "Recycle Bin emptied. Cleanup finished!", parent=window)
-            except Exception:
-                messagebox.showinfo("Notice", "Could not empty the Recycle Bin.", parent=window)
-        else:
-            messagebox.showinfo("Simulation", "[SIMULATION] Recycle Bin would be emptied successfully!", parent=window)
+        try:
+            # BLOCCO DI SICUREZZA: Commentato per non svuotare il cestino reale
+            # ctypes.windll.shell32.SHEmptyRecycleBinW(None, None, 7)
+            messagebox.showinfo("Success!", "Recycle Bin emptied. Cleanup finished!")
+        except Exception:
+            messagebox.showinfo("Notice", "Could not empty the Recycle Bin.")
     else:
-        messagebox.showinfo("Finished!", "Process complete. Recycle Bin preserved!")
+        messagebox.showinfo("Finished!", "Cleanup complete. Recycle Bin preserved!")
 
-    window.destroy()
+    window.destroy() # Chiude definitivamente l'app
 
-# 2. INTERFACCIA GRAFICA CON TRE BOTTONI (SIMULATE, CLEAN, CANCEL)
+# 2. INTERFACCIA GRAFICA CON BARRA DI AVANZAMENTO
 def create_gui():
     window = Tk()
-    window.title("Smart Cache Cleaner ⚡")
-    window.geometry("460x220")
+    window.title("Smart Cache Cleaner ⚡ [SIMULATION MODE]")
+    window.geometry("400x180")
     window.resizable(False, False)
+    
+    # Centra la finestra sullo schermo
     window.eval('tk::PlaceWindow . center')
 
-    # Forza l'applicazione in primo piano all'avvio
-    window.attributes('-topmost', True)
-    window.update()
-    window.attributes('-topmost', False)
-
-    title_label = Label(window, text="Smart Cache Cleaner v1.3.0", font=("Arial", 12, "bold"))
+    # Titolo dell'applicazione
+    title_label = Label(window, text="Smart Cache Cleaner v1.2.0 (Demo)", font=("Arial", 12, "bold"))
     title_label.pack(pady=10)
 
-    status_label = Label(window, text="Status: Choose an action below", font=("Arial", 10))
+    # Etichetta di stato dinamica
+    status_label = Label(window, text="Status: Ready to simulate scan", font=("Arial", 10))
     status_label.pack(pady=5)
 
-    progress_bar = Progressbar(window, orient="horizontal", length=360, mode="determinate")
+    # Barra di avanzamento grafica
+    progress_bar = Progressbar(window, orient="horizontal", length=300, mode="determinate")
     progress_bar.pack(pady=10)
 
-    import tkinter as tk
-    btn_frame = tk.Frame(window)
-    btn_frame.pack(pady=10)
-
-    def disable_all_buttons():
-        sim_button.config(state="disabled")
-        clean_button.config(state="disabled")
-        cancel_button.config(state="disabled")
-
-    sim_button = Button(
-        btn_frame, 
-        text="RUN SIMULATION", 
-        font=("Arial", 9, "bold"), 
-        bg="#FF3B30", 
-        fg="white", 
-        width=15,
-        command=lambda: [disable_all_buttons(), run_cleanup_process(progress_bar, status_label, window, is_simulation=True)]
-    )
-    sim_button.pack(side="left", padx=5)
-
-    clean_button = Button(
-        btn_frame, 
-        text="REAL CLEAN", 
-        font=("Arial", 9, "bold"), 
+    # Bottone di avvio (Verde stile WhatsApp)
+    start_button = Button(
+        window, 
+        text="START SIMULATION", 
+        font=("Arial", 10, "bold"), 
         bg="#25D366", 
         fg="white", 
-        width=12,
-        command=lambda: [disable_all_buttons(), run_cleanup_process(progress_bar, status_label, window, is_simulation=False)]
+        command=lambda: [start_button.config(state="disabled"), run_cleanup(progress_bar, status_label, window)]
     )
-    clean_button.pack(side="left", padx=5)
-
-    cancel_button = Button(
-        btn_frame, 
-        text="CANCEL", 
-        font=("Arial", 9, "bold"), 
-        bg="#8E8E93", 
-        fg="white", 
-        width=10,
-        command=window.destroy
-    )
-    cancel_button.pack(side="left", padx=5)
+    start_button.pack(pady=5)
 
     window.mainloop()
 
