@@ -1,88 +1,87 @@
-<img width="800" height="495" alt="ezgif-61d550fd524bff96" src="https://github.com/user-attachments/assets/feacb348-65bc-4da8-9dda-234cc4b04bdd" />
-# ⚡ Smart Cache Cleaner v1.3.0 (Protected Demo)
+# ⚡ Smart Cache Cleaner v1.3.0
+🎉 NOW WITH REAL CLEANING & ACTIVE WORKING MODES!
 
-### 🎉 NOW WITH SIMULATION & ACTION BUTTONS!
-This version features our brand-new interactive interface! You can now choose between running a safe simulation or a real cleanup. **However, for maximum safety in this community demo, all destructive actions are safely locked via code constraints.** It is 100% safe to test every button!
+This version introduces the ultimate interactive interface! You can now choose between running a safe simulation to analyze your system or launching a real, deep cleanup of your PC. All physical file deletions, quarantine management, and Recycle Bin emptying functions are now fully unlocked and operational.
+
+A lightweight, high-speed, and open-source system optimizer built with Python. It scans temporary files, calculates system cache recovery, and safely handles unused files through an intelligent quarantine system—all managed directly through an optimized graphical interface.
 
 ---
 
-A lightweight, high-speed, and open-source system analyzer built with Python. It scans temporary files, estimates system cache recovery, and showcases our upcoming quarantine system—all while keeping your personal data completely untouched.
-
 ## ✨ Core Features
 
-### 🗑️ Smart Cleanup Showcase
-* **Obvious Junk Detection:** Automatically detects `.tmp`, `.log`, and `.bak` files that are cluttering your space.
-* **Intelligent Quarantine Preview:** Identifies files older than 14 days and showcases how they will be moved to a secure Desktop folder in the final version.
-* **Dual Operational Modes:** Features separate paths for a simulation preview and a real operational workflow.
-* **Terminal-Free GUI:** Designed with built-in Windows protections to instantly hide the black console window on startup, showing only the clean graphical interface.
+### 🗑️ Smart Cleanup Workflow
+* **Obvious Junk Detection**: Automatically detects and permanently deletes `.tmp`, `.log`, `.bak` files, and zero-byte (0 KB) files cluttering your drive.
+* **Intelligent Desktop Quarantine**: Identifies files older than 14 days and moves them to a dedicated folder on your Desktop (`Cleaner_Quarantine`), letting you review them before final removal.
+* **Dual Operational Modes**: Separate software paths for a safe simulation preview or a real, destructive operational cleanup.
+* **Terminal-Free GUI**: Utilizes native Windows API integration to instantly hide the black command prompt window on startup, rendering only the clean graphical interface.
 
 ### ⚡ Performance & Safety
-* **High-Speed Scanning:** Analyzes thousands of temporary files in seconds.
-* **Real-Time Progress Bar:** Beautiful live GUI showing progress percentage and file counts dynamically.
-* **100% Privacy & Safety:** Runs entirely offline on your local computer. Zero tracking, zero telemetry.
-* **Protected Demo Code:** All actual file modifications, deletions, and Recycle Bin emptying are safely commented out in the source code for total peace of mind.
+* **High-Speed Scanning**: Analyzes thousands of temporary files inside the Windows `%TEMP%` directory in seconds.
+* **Real-Time Progress Bar**: Dynamic live graphical interface showing progress percentage and exact file counts as the scan progresses.
+* **100% Privacy & Safety**: Runs entirely offline on your local computer. Zero tracking, zero telemetry.
+* **Built-in Guardrails**: Automatically skips symbolic links (`symlinks`) and gracefully handles system-locked or permission-restricted files without crashing.
+
+---
 
 ## 🚀 How to Run
 
-To ensure maximum safety and transparency, this software runs directly from its Python source code. This bypasses rigid Windows restrictions (like Smart App Control) since you can read every single line of code yourself.
+To ensure maximum transparency, this software runs directly from its Python source code. This allows you to inspect every single line of code and easily bypass rigid Windows restrictions (like *Smart App Control*).
 
 ### Step 1: Install Python
 1. Open the **Microsoft Store** on your Windows PC.
 2. Search for **Python** (version 3.11, 3.12, or later recommended).
-3. Click **Get** → **Install**. Official, free, and takes seconds.
+3. Click **Get** → **Install**. It is official, free, and takes seconds.
 
 ### Step 2: Download & Run
-1. Download the `cleaner.py` (or save it as `cleaner.pyw`) file from this repository.
-2. **Double-click** the file to launch it instantly!
+1. Download the `cleaner.py` file (or save it as `cleaner.pyw` to natively bypass the terminal window).
+2. Double-click the file to launch it instantly!
 
-
-
-*Alternative for developers (by terminal):*
+*Alternative for developers (via terminal):*
 ```bash
 python cleaner.py
 ```
 
-## 🎮 Using the GUI<img width="800" height="495" alt="gif-ezgif com-optimize" src="https://github.com/user-attachments/assets/9cac832e-53dc-4c1a-8444-2b16ca66c00f" />
+---
 
+## 🎮 Using the GUI
 
 | Button | Action | Color |
-|--------|--------|-------|
-| **RUN SIMULATION** | Standard preview mode: scans files and calculates potential space recovered safely. | 🔴 Red |
-| **REAL CLEAN** | Simulates the full workflow (Scan → Quarantine prompt → Recycle Bin prompt) with zero actual damage. | 🟢 Green |
+| :--- | :--- | :--- |
+| **RUN SIMULATION** | **Safe preview mode**: Scans files and calculates potential space recovered without modifying or deleting anything. | 🔴 Red |
+| **REAL CLEAN** | **Real cleanup mode**: Launches the full active workflow. Deletes junk, moves old files to quarantine, and prompts to empty the Recycle Bin. | 🟢 Green |
 | **CANCEL** | Instantly closes the application safely at any time. | ⚫ Gray |
 
-### The Planned Workflow (How the final version will act)
-1. **Scan Phase:** Analyzes all files in the Windows `%TEMP%` directory.
-2. **Action Phase:** Direct deletion for obvious junk and a dedicated Desktop Quarantine folder for older files.
-3. **Review Phase:** Prompts the user to inspect quarantined files before final deletion.
-4. **Trash Phase:** Offers a native one-click option to empty the Windows Recycle Bin.
-
-## 🛡️ Safety Features
-
-✅ **Zero File Risk:** Deletion and movement functions are completely disabled via code blocks in this release.  
-✅ **Symlink Detection:** Automatically skips symbolic links to prevent any directory escaping.  
-✅ **Error Resilience:** Gracefully handles system-locked or permission-restricted files without crashing.  
-✅ **Button Locking:** Disables all buttons immediately after a click to prevent accidental double-execution.
-
-## 📝 License
-
-Distributed under the **MIT License**. See `LICENSE` for full details.
-
-## 🌟 Show Your Support & Unlock V2.0!
-
-This project scales with the community! Help us reach our milestones to unlock the full real-world utility:
-
-### 🎯 Community Goal: Help us reach 50 Stars! ⭐
-As soon as this repository hits **50 Stars**, I will instantly release the **Version 2.0 "Ultimate Edition"**, removing the code blocks and unlocking the real operational cleaning features ALL AT ONCE!
-
-**OBVIOUSLY DECIDED BY YOU! ENTER IN OUR WHATSAPP GROUP AND HELP US TO CREATE THE NEW UPDATE**
-
-Want to see behind-the-scenes development, vote on upcoming updates, and discover the high-energy beats I listen to while coding? 🎶
-
-[![Follow Me on WhatsApp](https://shields.io)](https://whatsapp.com/channel/0029Vb8qa36IiRollahObS2Z)
-
-*Click the badge above to join our secret tech community! 🚀*
+### The Operational Process Flow
+1. **Scan Phase**: Analyzes all files currently residing in the Windows `%TEMP%` directory.
+2. **Action Phase**: Executes direct deletion for obvious junk and transfers older files into the Desktop Quarantine folder.
+3. **Review Phase**: A dialog window prompts you to check the quarantine folder. Move out anything you want to keep; clicking OK will permanently wipe the remaining discarded files.
+4. **Trash Phase**: Offers a native one-click integration to safely empty the Windows Recycle Bin.
 
 ---
 
-**Made with ❤️ for system optimization | Windows Only**
+## 🛡️ Active Safety Features
+* **Symlink Skipping**: Automatically ignores symbolic links to prevent any unintended directory escaping.
+* **Error Resilience**: Safely skips system-protected or active in-use files without freezing the software thread.
+* **Button Locking**: Disables all interactive GUI buttons immediately after a click to prevent accidental double-executions.
+
+---
+
+## 📝 License
+Distributed under the MIT License. See the `LICENSE` file for full details.
+
+---
+
+## 🌟 Support the Project & Shape the Community!
+This project scales directly with community interaction! Help us hit our development milestones to unlock upcoming features:
+
+🎯 **Community Goal: Help us reach 50 Stars!** ⭐
+As soon as this repository hits 50 Stars, I will instantly release the **Version 2.0 "Ultimate Edition"**, featuring deeper cleaning algorithms and full custom exclusions!
+
+Want to see behind-the-scenes development, vote on upcoming updates, or chat directly about the source code? 🎶
+
+[**Join Our WhatsApp Group**](https://whatsapp.com/channel/0029Vb8qa36IiRollahObS2Z) 🚀
+
+Click the link above to join our tech community and help us build the next big update!
+
+*Made with ❤️ for system optimization | Windows Only*
+
